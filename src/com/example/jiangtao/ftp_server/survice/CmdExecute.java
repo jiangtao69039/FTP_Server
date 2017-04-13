@@ -14,10 +14,12 @@ import java.util.Calendar;
 
 import javax.swing.filechooser.FileSystemView;
 
+import com.example.jiangtao.ftp_server.cmdinterface.CommandNameError;
+import com.example.jiangtao.ftp_server.cmdinterface.CommandOperator;
 import com.example.jiangtao.ftp_server.entity.Command;
 import com.example.jiangtao.ftp_server.globalclass.ParseResultMsg;
 
-public class CmdExecute {
+public class CmdExecute implements CommandNameError{
 		
 	private Command command;
 	private Socket socket;
@@ -33,10 +35,37 @@ public class CmdExecute {
 		return GetInstance.instance;
 	}
 	
-	public void execute (Command command,Socket socket)throws IOException{
+	public void execute(Command command,Socket socket)throws IOException{
 		this.command=command;
 		this.socket= socket;
-		switch(this.command.getCmdName())
+		String classname = "com.example.jiangtao.ftp_server.operator.CmdOf";
+		classname+= this.command.getCmdName();
+		try {
+			Class<CommandOperator> targetclass = (Class<CommandOperator>) Class.forName(classname);
+			CommandOperator instance = targetclass.newInstance();
+			instance.cmdRun(this.socket,this.command);
+		
+		} catch (ClassNotFoundException e) {
+			
+			//
+			//
+			//  没有这个命令
+			this.errorCmdNameExecute(socket);
+			//
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	/*	switch(this.command.getCmdName())
 		{
 			case ParseResultMsg.ERROR:
 				
@@ -60,17 +89,19 @@ public class CmdExecute {
 			default:
 				
 				break;
-		}
+		}*/
 		
 	}
 	
 	
-	private void cmd_Error(){
+	/*private void cmd_Error(){
 		
 		/////
 		//命令错误时的执行代码
-	}
-	private void cmd_open(){
+	}*/
+	
+	
+	/*private void cmd_open(){
 		if(this.command.getCmdParameter().length !=1 ) //有且只有一个参数，表示文件名
 		{
 			cmd_Error();
@@ -84,8 +115,10 @@ public class CmdExecute {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	private void cmd_upload(){
+	}*/
+	
+	
+	/*private void cmd_upload(){
 		if(this.command.getCmdParameter().length !=1 ) //有且只有一个参数，表示文件名
 		{
 			cmd_Error();
@@ -126,8 +159,9 @@ public class CmdExecute {
 			e.printStackTrace();
 		}
 		
-	}
-	private void cmd_download(){
+	}*/
+	
+	/*private void cmd_download(){
 		if(this.command.getCmdParameter().length !=1 )
 		{
 			cmd_Error();
@@ -166,8 +200,11 @@ public class CmdExecute {
 		
 		
 		
-	}
-	private void cmd_ls() throws IOException{
+	}*/
+	
+	
+	
+	/*private void cmd_ls() throws IOException{
 		if(this.command.getCmdParameter().length >1)
 		{
 			cmd_Error();
@@ -248,6 +285,6 @@ public class CmdExecute {
 		}
 		
 		
-	}
+	}*/
 	
 }
