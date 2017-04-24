@@ -41,7 +41,8 @@ public class CmdExecute implements CommandNameError{
 		String classname = "com.example.jiangtao.ftp_server.operator.CmdOf";
 		classname+= this.command.getCmdName();
 		try {
-			Class<CommandOperator> targetclass = (Class<CommandOperator>) Class.forName(classname);
+			Class<CommandOperator> targetclass = (Class<CommandOperator>)
+					Class.forName(classname);
 			CommandOperator instance = targetclass.newInstance();
 			instance.cmdRun(this.socket,this.command);
 		
