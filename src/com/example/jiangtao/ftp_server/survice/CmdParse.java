@@ -1,7 +1,7 @@
 package com.example.jiangtao.ftp_server.survice;
 
 import com.example.jiangtao.ftp_server.entity.Command;
-import com.example.jiangtao.ftp_server.globalclass.ParseResultMsg;
+import com.example.jiangtao.ftp_server.constant.ParseResultMsg;
 
 
 
@@ -12,7 +12,7 @@ public class CmdParse {
 	private CmdParse(){
 		
 	}
-	//静态内部类保证多线程环境下的安全问题
+	
 	private static class GetInstance{
 		private static CmdParse instance = new CmdParse();
 	}

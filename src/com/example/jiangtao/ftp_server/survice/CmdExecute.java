@@ -17,12 +17,12 @@ import javax.swing.filechooser.FileSystemView;
 import com.example.jiangtao.ftp_server.cmdinterface.CommandNameError;
 import com.example.jiangtao.ftp_server.cmdinterface.CommandOperator;
 import com.example.jiangtao.ftp_server.entity.Command;
-import com.example.jiangtao.ftp_server.globalclass.ParseResultMsg;
+import com.example.jiangtao.ftp_server.constant.ParseResultMsg;
 
 public class CmdExecute implements CommandNameError{
 		
-	private Command command;
-	private Socket socket;
+	//private Command command;
+	//private Socket socket;
 	private CmdExecute(){
 		
 	}
@@ -36,23 +36,20 @@ public class CmdExecute implements CommandNameError{
 	}
 	
 	public void execute(Command command,Socket socket)throws IOException{
-		this.command=command;
-		this.socket= socket;
+		//this.command=command;
+		//this.socket= socket;
 		String classname = "com.example.jiangtao.ftp_server.operator.CmdOf";
-		classname+= this.command.getCmdName();
+		classname+= command.getCmdName();
 		try {
 			Class<CommandOperator> targetclass = (Class<CommandOperator>)
 					Class.forName(classname);
 			CommandOperator instance = targetclass.newInstance();
-			instance.cmdRun(this.socket,this.command);
+			instance.cmdRun(socket,command);
 		
 		} catch (ClassNotFoundException e) {
 			
-			//
-			//
 			//  没有这个命令
 			this.errorCmdNameExecute(socket);
-			//
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InstantiationException e) {
@@ -64,6 +61,13 @@ public class CmdExecute implements CommandNameError{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
+		
+		
+		
+		
+		
 		
 		
 	/*	switch(this.command.getCmdName())

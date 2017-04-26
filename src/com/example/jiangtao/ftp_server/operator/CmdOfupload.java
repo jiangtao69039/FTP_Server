@@ -10,7 +10,7 @@ import java.net.Socket;
 import com.example.jiangtao.ftp_server.cmdinterface.CommandOperator;
 import com.example.jiangtao.ftp_server.cmdinterface.CommandParameterError;
 import com.example.jiangtao.ftp_server.entity.Command;
-import com.example.jiangtao.ftp_server.globalclass.ParseResultMsg;
+import com.example.jiangtao.ftp_server.constant.ParseResultMsg;
 
 public class CmdOfupload implements CommandOperator, CommandParameterError {
 
